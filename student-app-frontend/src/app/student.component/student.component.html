@@ -1,0 +1,171 @@
+<div class="container py-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 text-center text-md-start">
+    <h3 class="fw-bold mb-3 mb-md-0">🎓 Students List</h3>
+    <button class="btn btn-success w-100 w-md-auto" (click)="toggleForm()">
+      {{ showForm ? 'Close' : '➕ Add Student' }}
+    </button>
+  </div>
+
+  <!-- ADD / EDIT FORM -->
+  <div *ngIf="showForm" class="card shadow-sm mb-4">
+    <div class="card-body">
+      <h5 class="card-title text-center text-md-start">
+        {{ editMode ? '✏️ Edit Student' : '🆕 Add Student' }}
+      </h5>
+
+      <form [formGroup]="studentForm" (ngSubmit)="saveStudent()" enctype="multipart/form-data" class="mt-3">
+        <div class="row g-3">
+
+          <!-- Name -->
+          <div class="col-12 col-md-4">
+            <label class="form-label">Full Name *</label>
+            <input type="text" formControlName="name" class="form-control"
+                   [ngClass]="{'is-invalid': studentForm.get('name')?.invalid && studentForm.get('name')?.touched}" />
+            <div class="invalid-feedback">
+              Name is required and must contain 3–50 letters only.
+            </div>
+          </div>
+
+          <!-- National ID -->
+          <div class="col-12 col-md-4">
+            <label class="form-label">National ID (14 digits)</label>
+            <input type="text" formControlName="nationalId" class="form-control"
+                   [ngClass]="{'is-invalid': studentForm.get('nationalId')?.invalid && studentForm.get('nationalId')?.touched}" />
+            <div class="invalid-feedback">
+              Must be 14 numbers (if entered).
+            </div>
+          </div>
+
+          <!-- Birthdate -->
+          <div class="col-12 col-md-4">
+            <label class="form-label">Birthdate *</label>
+            <input type="date" formControlName="birthdate" class="form-control"
+                   [ngClass]="{'is-invalid': studentForm.get('birthdate')?.invalid && studentForm.get('birthdate')?.touched}" />
+            <div class="invalid-feedback">
+              Birthdate is required.
+            </div>
+          </div>
+
+          <!-- City -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">City *</label>
+            <select class="form-select" formControlName="city">
+              <option value="" disabled>Select City</option>
+              <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+            </select>
+          </div>
+
+          <!-- Class -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Class *</label>
+            <select class="form-select" formControlName="class">
+              <option value="" disabled>Select Class</option>
+              <option *ngFor="let c of classes" [value]="c">{{ c }}</option>
+            </select>
+          </div>
+
+          <!-- Gender -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Gender *</label>
+            <select class="form-select" formControlName="gender">
+              <option value="" disabled>Select Gender</option>
+              <option *ngFor="let g of genders" [value]="g">{{ g }}</option>
+            </select>
+          </div>
+
+          <!-- Remarks -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Remarks</label>
+            <input type="text" formControlName="remarks" class="form-control" />
+          </div>
+
+          <!-- File -->
+          <div class="col-12 col-md-6">
+            <label class="form-label">Document</label>
+            <input type="file" (change)="onFileSelected($event)" class="form-control" />
+          </div>
+
+          <!-- Enrolled -->
+          <div class="col-12 col-md-6 d-flex align-items-center">
+            <div class="form-check mt-4">
+              <input type="checkbox" formControlName="enrolled" class="form-check-input" />
+              <label class="form-check-label">Enrolled</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 text-center text-md-end">
+          <button type="submit" class="btn btn-primary me-2 w-100 w-md-auto">
+            {{ editMode ? 'Update' : 'Add' }}
+          </button>
+          <button type="button" class="btn btn-secondary w-100 w-md-auto" (click)="cancelForm()">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-responsive shadow-sm bg-white rounded p-3">
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="🔍 Search students..."
+      [(ngModel)]="searchTerm"
+    />
+
+    <table class="table table-striped table-hover align-middle text-center">
+      <thead class="table-info">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>City</th>
+          <th>Class</th>
+          <th>Gender</th>
+          <th>Enrolled</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr *ngFor="let student of students | filter: searchTerm : ['name', 'id']">
+          <td>{{ student.id }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.city }}</td>
+          <td>{{ student.class }}</td>
+          <td>{{ student.gender }}</td>
+          <td>{{ student.enrolled ? '✅' : '❌' }}</td>
+          <td>
+            <button class="btn btn-outline-primary btn-sm" (click)="viewStudent(student)">View</button>
+            <button class="btn btn-outline-success btn-sm" (click)="editStudent(student)">Edit</button>
+            <button class="btn btn-outline-danger btn-sm" (click)="deleteStudent(student.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MODAL -->
+  <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header bg-info text-white">
+          <h5 class="modal-title" id="viewModalLabel">Student Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" *ngIf="selectedStudent">
+          <div class="row gy-2">
+            <div class="col-md-6"><strong>Name:</strong> {{ selectedStudent.name }}</div>
+            <div class="col-md-6"><strong>National ID:</strong> {{ selectedStudent.nationalId }}</div>
+            <div class="col-md-6"><strong>City:</strong> {{ selectedStudent.city }}</div>
+            <div class="col-md-6"><strong>Class:</strong> {{ selectedStudent.class }}</div>
+            <div class="col-md-6"><strong>Gender:</strong> {{ selectedStudent.gender }}</div>
+            <div class="col-md-6"><strong>Enrolled:</strong> {{ selectedStudent.enrolled ? 'Yes' : 'No' }}</div>
+            <div class="col-12"><strong>Remarks:</strong> {{ selectedStudent.remarks }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary w-100 w-md-auto" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

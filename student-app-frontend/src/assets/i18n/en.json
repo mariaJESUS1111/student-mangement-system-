@@ -1,0 +1,15 @@
+{
+  "TITLE": "Student Management System",
+  "LANG_SWITCH": "Switch Language",
+  "NAME": "Name",
+  "NATIONAL_ID": "National ID",
+  "BIRTHDATE": "Birthdate",
+  "ADDRESS": "Address",
+  "CITY": "City",
+  "CLASS": "Class",
+  "GENDER": "Gender",
+  "ENROLLED": "Enrolled",
+  "REMARKS": "Remarks",
+  "SAVE": "Save",
+  "CANCEL": "Cancel"
+}

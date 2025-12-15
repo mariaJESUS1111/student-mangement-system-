@@ -1,0 +1,30 @@
+# Student Management System - Project Files
+
+# Video and large files
+*.mp4
+*.bak
+*.pdf
+
+# Common
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Backend (.NET)
+StudentApp.Api/bin/
+StudentApp.Api/obj/
+StudentApp.Api/Uploads/*
+!StudentApp.Api/Uploads/.gitkeep
+StudentApp.Api/appsettings.Development.json
+
+# Frontend (Angular)
+student-app-frontend/node_modules/
+student-app-frontend/dist/
+student-app-frontend/.angular/
+
+# IDE
+.idea/
+.vscode/
+*.suo
+*.user

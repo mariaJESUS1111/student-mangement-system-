@@ -1,0 +1,13 @@
+.navbar {
+  border-radius: 0 0 12px 12px;
+}
+
+a.nav-link.active {
+  font-weight: 600;
+  color: #fff !important;
+  text-decoration: underline;
+}
+
+.container {
+  padding-top: 20px;
+}

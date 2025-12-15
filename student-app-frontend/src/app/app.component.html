@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-info m-sm-4 shadow">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink="/">🎓 StudentApp</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse modal-sm" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item" *ngIf="!auth.isAuthenticated()">
+          <a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a>
+        </li>
+        <li class="nav-item" *ngIf="!auth.isAuthenticated()">
+          <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
+          <a class="nav-link" routerLink="/students" routerLinkActive="active">Students</a>
+        </li>
+        <li class="nav-item" *ngIf="auth.isAuthenticated()">
+          <button class="btn btn-outline-light btn-sm ms-2" (click)="logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <router-outlet></router-outlet>
+</div>
+
+

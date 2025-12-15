@@ -1,0 +1,11 @@
+<div class="container text-center mt-5">
+  <div class="card shadow p-4 border-0">
+    <h2 class="text-success">🎉 Welcome, {{ user?.firstName }} {{ user?.lastName }}!</h2>
+    <p class="text-muted mt-2">You have successfully logged in.</p>
+
+    <div class="mt-4">
+      <button class="btn btn-primary me-3" (click)="goToStudents()">View Students</button>
+      <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>

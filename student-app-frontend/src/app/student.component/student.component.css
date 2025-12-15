@@ -1,0 +1,40 @@
+.table-container {
+  overflow-x: auto;
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+table {
+  width: 100%;
+  min-width: 600px;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+th, td {
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 13px;
+  }
+  .table-container {
+    padding: 0.5rem;
+  }
+  th, td {
+    padding: 0.4rem;
+  }
+  button.btn {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+}
+
+.modal-content {
+  border-radius: 10px;
+}
+
+.btn {
+  border-radius: 8px;
+}
